@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.WebUtils;
 
 import javax.servlet.ServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -65,7 +66,14 @@ public class UserConteroller extends BaseController{
 
     @GetMapping("add")
     public String add(Model model){
-        List<Role> roleList = roleService.selectAll();
+        List<Role> list = roleService.selectAll();
+        List<Role> roleList = new ArrayList<Role>();
+        /** 过滤超级管理员，不允许添加超级管理员用户*/
+        for(Role r:list){
+            if(r.getId()!= 1){
+                roleList.add(r);
+            }
+        }
         model.addAttribute("roleList",roleList);
         return "admin/system/user/add";
     }
