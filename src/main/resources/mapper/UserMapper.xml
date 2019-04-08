@@ -59,6 +59,8 @@
         left join sys_menu  m    		on 	m.id = srm.menu_id
         where
         1=1
+        <!--只查询有效状态的菜单-->
+        and m.del_flag = false
         <if test="id == 0 or id == null">
          and u.del_flag = false
          and r.del_flag = false
@@ -90,15 +92,8 @@
         (select count(*) from sys_menu where del_flag =false) as "sys:menu:list",
         (select count(*) from sys_rescource where del_flag = false) as "sys:rescource:list",
         (select count(*) from sys_log where del_flag = false) as "sys:log:list",
-        24 as "sys:site:list",
-        (select count(*) from information_schema.tables where table_schema='mysiteforme') as "sys:table:list",
-        (select count(*) from sys_dict where del_flag = false) as "sys:dict:list",
-        (select count(*) from blog_comment where del_flag =false) as "blog:comment:list",
-        (select count(*) from blog_article where del_flag = false) as "blog:article:list",
-        (select count(*) from blog_channel where del_flag = false) as "blog:channel:list",
-        (select count(*) from blog_tags where del_flag = false) as "blog:tags:list",
-        (select count(*) from quartz_task where del_flag = false) as "quartz:task:list",
-        (select count(*) from quartz_task_log where del_flag = false) as "quartz:log:list"
+        (select count(*) from sys_log where del_flag = false) as "ebag:eno:list",
+        24 as "sys:site:list"
     </select>
 
 
